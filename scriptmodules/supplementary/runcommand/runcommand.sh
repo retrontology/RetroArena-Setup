@@ -1105,7 +1105,7 @@ function ogst_play() {
     elif [[ $EMULATOR == sdlpop ]]; then
         EMU_PROC="prince"
     elif [[ $EMULATOR == solarus ]]; then
-        EMU_PROC="solarus_run"
+        EMU_PROC="solarus-run"
     else
         EMU_PROC="$EMULATOR"
     fi  
