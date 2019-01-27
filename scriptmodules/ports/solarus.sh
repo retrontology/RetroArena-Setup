@@ -20,16 +20,18 @@ function depends_solarus() {
 }
 
 function sources_solarus() {
-    downloadAndExtract "http://www.solarus-games.org/downloads/solarus/solarus-1.6.0-src.tar.gz" "$md_build" 1
+    local branch="dev"
+    gitPullOrClone "$md_build" "https://gitlab.com/solarus-games/solarus.git" "$branch"
     downloadAndExtract "http://www.zelda-solarus.com/downloads/zsdx/zsdx-1.12.0.tar.gz" "$md_build"
     downloadAndExtract "http://www.zelda-solarus.com/downloads/zsxd/zsxd-1.12.0.tar.gz" "$md_build"
     downloadAndExtract "http://www.zelda-solarus.com/downloads/zelda-roth-se/zelda-roth-se-1.2.0.tar.gz" "$md_build"
+    wget "http://www.zelda-solarus.com/zs/download/zxd2-src/" -O "$md_build/zelda-xd2-1.1.0.tar.gz" && tar -xzvf "$md_build/zelda-xd2-1.1.0.tar.gz"
 }
 
 function build_solarus() {
     mkdir build
     cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX="$md_inst"
+    cmake .. -DCMAKE_INSTALL_PREFIX="$md_inst" -DSOLARUS_GUI=OFF
     make -j4
     cd ../zsdx-1.12.0
     cmake . -DCMAKE_INSTALL_PREFIX="$md_inst"
@@ -40,11 +42,15 @@ function build_solarus() {
     cd ../zelda-roth-se-1.2.0
     cmake . -DCMAKE_INSTALL_PREFIX="$md_inst"
     make -j4
+    cd ../zelda-xd2-1.1.0
+    cmake . -DCMAKE_INSTALL_PREFIX="$md_inst"
+    make -j4
     md_ret_require=(
         "$md_build/build/solarus-run"
         "$md_build/zsdx-1.12.0/data.solarus"
         "$md_build/zsxd-1.12.0/data.solarus"
         "$md_build/zelda-roth-se-1.2.0/data.solarus"
+        "$md_build/zelda-xd2-1.1.0/data.solarus"
     )
 }
 
@@ -57,6 +63,8 @@ function install_solarus() {
     make install
     cd ../zelda-roth-se-1.2.0/
     make install
+    cd ../zelda-xd2-1.1.0/
+    make install
 }
 
 function install_bin_solarus() {
@@ -67,6 +75,7 @@ function configure_solarus() {
     addPort "$md_id" "zsdx" "Solarus Engine - Zelda Mystery of Solarus DX" "LD_LIBRARY_PATH=$md_inst/lib $md_inst/bin/solarus-run $md_inst/share/solarus/zsdx/"
     addPort "$md_id" "zsxd" "Solarus Engine - Zelda Mystery of Solarus XD" "LD_LIBRARY_PATH=$md_inst/lib $md_inst/bin/solarus-run $md_inst/share/solarus/zsxd/"
     addPort "$md_id" "zelda_roth_se" "Solarus Engine - Zelda Return of the Hylian SE" "LD_LIBRARY_PATH=$md_inst/lib $md_inst/bin/solarus-run $md_inst/share/solarus/zelda_roth_se/"
+    addPort "$md_id" "zelda_xd2_mercuris_chess" "Solarus Engine - Zelda Mystery of Solarus XD Episode 2: Mercuris Chess" "LD_LIBRARY_PATH=$md_inst/lib $md_inst/bin/solarus-run $md_inst/share/solarus/zelda_xd2_mercuris_chess/"
 
     # symlink the library so it can be found on all platforms
     ln -sf "$md_inst"/lib/*/libsolarus.so "$md_inst/lib"

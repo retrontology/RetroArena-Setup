@@ -128,7 +128,7 @@ function depends_emulationstation() {
     local depends=(
         libboost-system-dev libboost-filesystem-dev
         libboost-date-time-dev libfreeimage-dev libfreetype6-dev
-        libcurl4-openssl-dev libasound2-dev cmake libsdl2-dev libsm-dev
+        libcurl4-openssl-dev libasound2-dev cmake libsm-dev libsdl2-dev
         libvlc-dev libvlccore-dev vlc
     )
 
