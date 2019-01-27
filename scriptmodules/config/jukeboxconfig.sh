@@ -9,10 +9,11 @@
 # at https://raw.githubusercontent.com/Retro-Arena/RetroArena-Setup/master/LICENSE.md
 #
 
-rp_module_id="bezelprojectlaunch"
-rp_module_desc="Downloader for RetroArach system bezel packs to be used for various systems."
+rp_module_id="jukeboxconfig"
+rp_module_desc="Configure common options for Fruitbox jukebox"
 rp_module_section="config"
 
-function gui_bezelprojectlaunch() {
-    source $scriptdir/scriptmodules/configv/bezelproject/bezelproject.sh
+function gui_jukeboxconfig() {
+    source $scriptdir/scriptmodules/config/jukeboxconfig/jukeboxconfig.sh
 }
+

@@ -9,10 +9,10 @@
 # at https://raw.githubusercontent.com/Retro-Arena/RetroArena-Setup/master/LICENSE.md
 #
 
-rp_module_id="odroid-config"
-rp_module_desc="Expand filesystem, configure network, boot, localisation, SSH"
+rp_module_id="esgamelist"
+rp_module_desc="Perform a cleanup in your EmulationStation gamelist.xml file"
 rp_module_section="config"
 
-function gui_odroid-config() {
-    source /usr/bin/odroid-config
+function gui_esgamelist() {
+    source $scriptdir/scriptmodules/config/esgamelist/esgamelist.sh
 }

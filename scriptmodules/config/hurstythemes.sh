@@ -10,7 +10,7 @@
 #
 
 rp_module_id="hurstythemes"
-rp_module_desc="Hursty's EmulationStation Themes Installer"
+rp_module_desc="Hursty's ES Theme Installer and Randomizer"
 rp_module_section="config"
 
 function depends_hurstythemes() {
@@ -336,11 +336,11 @@ function gui_hurstythemes() {
         [[ -z "$choice" ]] && break
         case "$choice" in
             E)  #enable ES bootup theme randomizer
-                touch $HOME/.config/themerandomizer
+                touch $home/.config/themerandomizer
                 printMsgs "dialog" "Theme Randomizer enabled"
                 ;;
             D)  #disable ES bootup theme randomizer
-                rm -rf $HOME/.config/themerandomizer
+                rm -rf $home/.config/themerandomizer
                 printMsgs "dialog" "Theme Randomizer disabled"
                 ;;
             *)  #install or update themes
