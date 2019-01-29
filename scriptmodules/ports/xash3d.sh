@@ -20,24 +20,24 @@ function depends_xash3d() {
 }
 
 function sources_xash3d() {
-    gitPullOrClone "https://github.com/ptitSeb/xash3d" "$md_build"
-    gitPullOrClone "https://github.com/retrontology/halflife" "$md_build"
-    gitPullOrClone "https://github.com/retrontology/XashXT" "$md_build"
+    gitPullOrClone "$md_build/xash3d" "https://github.com/ptitSeb/xash3d"
+    gitPullOrClone "$md_build/halflife" "https://github.com/retrontology/halflife"
+    gitPullOrClone "$md_build/XashXT" "https://github.com/retrontology/XashXT"
 }
 
 function build_xash3d() {
     cd xash3d
     mkdir build
     cd build
-    cmake .. -DRPI=ON -DXASH_SDL=ON -DXASH_VGUI=OFF -DHL_SDK_DIR=../../halflife/ -DCMAKE_C_FLAGS="-mcpu=cortex-a15 -mtune=cortex-a15.cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" -DCMAKE_CXX_FLAGS="-mcpu=cortex-a15 -mtune=cortex-a15.cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" -DCMAKE_INSTALL_PREFIX="$md_inst"
+    cmake .. -DRPI=ON -DXASH_SDL=ON -DXASH_VGUI=OFF -DHL_SDK_DIR="$md_build"/halflife/ -DCMAKE_C_FLAGS="-mcpu=cortex-a15 -mtune=cortex-a15.cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" -DCMAKE_CXX_FLAGS="-mcpu=cortex-a15 -mtune=cortex-a15.cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" -DCMAKE_INSTALL_PREFIX="$md_inst"
     make -j8
-    cd ../halflife/dlls
+    cd ../../halflife/dlls
     make -f Makefile.rpi -j8
     cd ../../XashXT/client
     make -f Makefile.rpi -j8
     md_ret_require=(
         "$md_build/xash3d/build/engine/libxash.so"
-        "$md_build/xash3d/mainui/engine/libxashmenu.so"
+        "$md_build/xash3d/build/mainui/libxashmenu.so"
         "$md_build/xash3d/build/game_launch/xash3d"
         "$md_build/halflife/dlls/hl.so"
         "$md_build/halflife/dlls/hl_bs.so"
