@@ -23,10 +23,14 @@ function sources_xash3d() {
     gitPullOrClone "$md_build/xash3d" "https://github.com/ptitSeb/xash3d"
     gitPullOrClone "$md_build/halflife" "https://github.com/retrontology/halflife"
     gitPullOrClone "$md_build/XashXT" "https://github.com/retrontology/XashXT"
+    gitPullOrClone "$md_build/glshim" "https://github.com/ptitSeb/glshim"
 }
 
 function build_xash3d() {
-    cd xash3d
+    cd glshim
+    cmake . -DBCMHOST=1
+    make GL -j8
+    cd ../xash3d
     mkdir build
     cd build
     cmake .. -DRPI=ON -DXASH_SDL=ON -DXASH_VGUI=OFF -DHL_SDK_DIR="$md_build"/halflife/ -DCMAKE_C_FLAGS="-mcpu=cortex-a15 -mtune=cortex-a15.cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" -DCMAKE_CXX_FLAGS="-mcpu=cortex-a15 -mtune=cortex-a15.cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations" -DCMAKE_INSTALL_PREFIX="$md_inst"
@@ -36,6 +40,7 @@ function build_xash3d() {
     cd ../../XashXT/client
     make -f Makefile.rpi -j8
     md_ret_require=(
+        "$md_build/glshim/lib/libGL.so.1"
         "$md_build/xash3d/build/engine/libxash.so"
         "$md_build/xash3d/build/mainui/libxashmenu.so"
         "$md_build/xash3d/build/game_launch/xash3d"
@@ -49,6 +54,7 @@ function build_xash3d() {
 function install_xash3d() {
     cd xash3d/build
     make install
+    cp "$md_build/glshim/lib/libGL.so.1" "$md_inst"/lib/
     cp "$md_build/halflife/dlls/hl.so" "$md_inst"/lib/
     cp "$md_build/halflife/dlls/hl_bs.so" "$md_inst"/lib/
     cp "$md_build/XashXT/client/client.so" "$md_inst"/lib/
@@ -56,5 +62,5 @@ function install_xash3d() {
 }
 
 function configure_xash3d() {
-    addPort "$md_id" "Half-Life" "Xash3D engine - Half-Life" "LIBGL_FB=1 LIBGL_BATCH=1 LD_LIBRARY_PATH=$md_inst/lib $md_inst/bin/xash3d -console -debug "
+    addPort "$md_id" "Half-Life" "Xash3D - Half-Life" "LIBGL_FB=1 LIBGL_BATCH=1 LD_LIBRARY_PATH=$md_inst/lib/xash3d $md_inst/bin/xash3d -console -debug "
 }
