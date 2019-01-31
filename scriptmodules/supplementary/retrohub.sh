@@ -13,19 +13,12 @@ rp_module_id="retrohub"
 rp_module_desc="Scan QR code retro gaming links using your mobile device"
 rp_module_section="opt"
 
-function sources_retrohub() {
+function install_bin_retrohub() {
     local rhdir="$datadir/retrohub"
-    if [[ -e "$rhdir" ]]; then
-        rm -rf "$rhdir"
-    fi
-    gitPullOrClone "$rhdir" https://github.com/Retro-Arena/RetroArena-hub.git
-}
-
-function install_retrohub() {
-    local rhdir="$datadir/retrohub"
-    rm -rf "$rhdir/.git"
-    rm -rf "$rhdir/.gitattributes"
+    gitPullOrClone "$rhdir" https://github.com/Retro-Arena/retrohub.git
     chown -R $user:$user "$rhdir"
+    
+    # enable on install
     enable_retrohub
 }
 

@@ -51,7 +51,6 @@ function configure_settingsmenu()
         "bgmtoggle"
         "bluetooth"
         "caseconfig"
-        "casetheme"
         "configedit"
         "controlreset"
         "escollections"
@@ -61,6 +60,7 @@ function configure_settingsmenu()
         "filemanager"
         "fruitbox"
         "hurstythemes"
+        "launchingvideos"
         "odroidconfig"
         "removemedia"
         "retroarch"
@@ -79,7 +79,6 @@ function configure_settingsmenu()
         "Sound: BGM Toggle"
         "Network: Bluetooth"
         "Media: Case Config for OGST"
-        "Media: Case Themes for OGST"
         "System: Configuration Editor"
         "System: Controller Reset"
         "Media: ES Collection List Generator"
@@ -89,6 +88,7 @@ function configure_settingsmenu()
         "System: File Manager"
         "Media: Jukebox Config"
         "Media: Hursty's ES Themes"
+        "Media: Launching Videos"
         "System: Odroid-Config"
         "Media: Remove Media"
         "System: Retroarch"
@@ -106,8 +106,7 @@ function configure_settingsmenu()
         "Downloader for RetroArach system bezel packs to be used for various systems"
         "Enable or disable the background music feature."
         "Register and connect to bluetooth devices. Unregister and remove devices, and display registered and connected devices."
-        "Case image selector for OGST - choose the type of image displayed upon game launch such as console system, boxart, cartart, snap, wheel, screenshot, or marquee."
-        "Case theme selector for OGST - choose different theme packs when Console System is selected in Case Config."
+        "Install themes for the OGST Case when 'Console System' is selected. In addition, upon game launch, choose different types of scraped images displayed such as boxart, cartart, snap, wheel, screenshot, marquee, or console system (default). There is also an option to completely disable the display."
         "Change common RetroArch options, and manually edit RetroArch configs, global configs, and non-RetroArch configs."
         "Reset controller configurations to factory default.
         
@@ -125,6 +124,7 @@ NOTE: Always make a backup copy of your 'gamelist.xml' and media files before ma
 NOTE: Requires a keyboard to be connected."
         "Configure the default skin and gamepad for Fruitbox jukebox."
         "Install, uninstall, or update Hursty's ES themes. Also, enable or disable the Theme Randomizer on boot option."
+        "Enable, disable, or update Launching Videos, which plays a video instead of an image during game launch."
         "Expand filesystem, configure network, boot, localisation, SSH, etc.
         
 NOTE: This menu is EXPERIMENTAL. Use at your own risk and be sure to backup your image!"
