@@ -197,9 +197,13 @@ function getDepends() {
     # check whether to use our own sdl2 - can be disabled to resolve issues with
     # mixing custom 64bit sdl2 and os distributed i386 version on multiarch
     local own_sdl2=1
+    local own_ffmpeg=1
     iniConfig " = " '"' "$configdir/all/retroarena.cfg"
     iniGet "own_sdl2"
     [[ "$ini_value" == "0" ]] && own_sdl2=0
+    # Possibly to be implemented later
+    #iniGet "own_ffmpeg"
+    #[[ "$ini_value" == "0" ]] && own_ffmpeg=0
 
     for required in $@; do
 
@@ -231,6 +235,10 @@ function getDepends() {
                 continue
             fi
             if [[ "$own_sdl2" -eq 1 && "$required" == "libsdl2-dev" ]] && hasPackage libsdl2-dev $(get_pkg_ver_sdl2) "ne"; then
+                packages+=("$required")
+                continue
+            fi
+            if [[ "$own_ffmpeg" -eq 1 && "$required" == "ffmpeg" ]] && hasPackage ffmpeg $(get_ver_ffmpeg) "ne"; then
                 packages+=("$required")
                 continue
             fi
@@ -270,6 +278,12 @@ function getDepends() {
                     rp_callModule sdl2 install_bin
                 else
                     rp_callModule sdl2
+                fi
+            elif [[ "$required" == "ffmpeg" && "$own_ffmpeg" == "1" ]]; then
+                if [[ "$__has_binaries" -eq 1 ]]; then
+                    rp_callModule ffmpeg install_bin
+                else
+                    rp_callModule ffmpeg
                 fi
             else
                 temp+=("$required")
