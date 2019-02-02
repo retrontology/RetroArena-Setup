@@ -20,13 +20,14 @@ function get_ver_ffmpeg() {
 }
 
 function depends_ffmpeg() {
+    aptInstall checkinstall
     apt build-dep -y --force-yes ffmpeg
 }
 
 function sources_ffmpeg() {
     local ver="$(get_ver_ffmpeg)"
     local branch="release/$ver"
-    gitPullOrClone "$md_build/$ver" https://git.ffmpeg.org/gitweb/ffmpeg.git "$branch"
+    gitPullOrClone "$md_build/$ver" https://git.ffmpeg.org/ffmpeg.git "$branch"
     cd "$ver"
 }
 
@@ -52,13 +53,14 @@ function build_ffmpeg() {
 
 function remove_old_ffmpeg() {
     # remove our old ffmpeg packages
-    hasPackage ffmpeg && apt remove -y --force-yes ffmpeg
+    sudo apt-get -y purge ffmpeg "libav*" "libpostproc*"
+    sudo apt-get -y autoremove
 }
 
 function install_ffmpeg() {
     remove_old_ffmpeg
     cd "$md_build/$ver"
-    make install
+    sudo checkinstall -y --deldoc=yes --pkgversion=10:3.4
     ldconfig
     echo "ffmpeg hold" | dpkg --set-selections
 }
