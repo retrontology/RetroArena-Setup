@@ -53,14 +53,14 @@ function build_ffmpeg() {
 
 function remove_old_ffmpeg() {
     # remove our old ffmpeg packages
-    sudo apt-get -y purge ffmpeg "libav*" "libpostproc*"
+    sudo apt-get -y purge ffmpeg libavutil-dev
     sudo apt-get -y autoremove
 }
 
 function install_ffmpeg() {
     remove_old_ffmpeg
     cd "$md_build/$ver"
-    sudo checkinstall -y --deldoc=yes --pkgversion=10:3.4
+    sudo checkinstall -y --deldoc=yes --pkgversion=3.4
     ldconfig
     echo "ffmpeg hold" | dpkg --set-selections
 }
@@ -71,6 +71,6 @@ function revert_ffmpeg() {
 }
 
 function remove_ffmpeg() {
-    apt-get remove -y --force-yes ffmpeg
+    dpkg -r ffmpeg
     apt-get autoremove -y
 }
