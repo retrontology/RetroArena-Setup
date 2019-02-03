@@ -239,6 +239,7 @@ function getDepends() {
                 continue
             fi
             if [[ "$own_ffmpeg" -eq 1 && "$required" == "ffmpeg" ]] && hasPackage ffmpeg $(get_ver_ffmpeg) "ne"; then
+            #if [[ "$own_ffmpeg" -eq 1 && "$required" == "ffmpeg" ]]; then
                 packages+=("$required")
                 continue
             fi
