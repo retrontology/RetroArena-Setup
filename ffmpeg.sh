@@ -60,8 +60,8 @@ function remove_old_ffmpeg() {
 function install_ffmpeg() {
     remove_old_ffmpeg
     cd "$md_build/$ver"
-    sudo checkinstall -y --deldoc=yes --pkgversion=3.4
-    ldconfig
+    checkinstall -y --install=no --fstrans=yes --deldoc=yes --pkgversion=3.4
+    sudo dpkg -i --force-overwrite ffmpeg_3.4-1_armhf.deb
     echo "ffmpeg hold" | dpkg --set-selections
 }
 
