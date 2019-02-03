@@ -49,6 +49,7 @@ function build_ffmpeg() {
         "$md_build/libswresample/libswresample-ffmpeg.so"
         "$md_build/libswscale/libswscale-ffmpeg.so"
         "$md_build/libavutil/libavutil-ffmpeg.so"
+        )
 }
 
 function remove_old_ffmpeg() {
