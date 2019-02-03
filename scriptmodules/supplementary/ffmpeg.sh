@@ -28,7 +28,6 @@ function sources_ffmpeg() {
     local ver="$(get_ver_ffmpeg)"
     local branch="release/$ver"
     gitPullOrClone "$md_build" https://git.ffmpeg.org/ffmpeg.git "$branch"
-    cd "$md_build"
 }
 
 function build_ffmpeg() {
@@ -60,9 +59,9 @@ function remove_old_ffmpeg() {
 
 function install_ffmpeg() {
     remove_old_ffmpeg
-    cd "$md_build/$ver"
+    cd "$md_build"
     checkinstall -y --install=no --fstrans=yes --deldoc=yes --pkgversion=3.4
-    sudo dpkg -i --force-overwrite ffmpeg_3.4-1_armhf.deb
+    sudo dpkg -i --force-overwrite ffmpeg_3.4-1*.deb
     echo "ffmpeg hold" | dpkg --set-selections
 }
 
