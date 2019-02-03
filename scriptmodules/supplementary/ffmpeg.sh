@@ -28,7 +28,7 @@ function sources_ffmpeg() {
     local ver="$(get_ver_ffmpeg)"
     local branch="release/$ver"
     gitPullOrClone "$md_build/$ver" https://git.ffmpeg.org/ffmpeg.git "$branch"
-    cd "$ver"
+    cd "$md_build/$ver"
 }
 
 function build_ffmpeg() {
@@ -53,7 +53,7 @@ function build_ffmpeg() {
 
 function remove_old_ffmpeg() {
     # remove our old ffmpeg packages
-    sudo apt-get -y purge ffmpeg libavutil-dev
+    sudo apt remove --purge ffmpeg
     sudo apt-get -y autoremove
 }
 
