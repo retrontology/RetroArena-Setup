@@ -29,13 +29,14 @@ function build_moonlight-embedded() {
     cmake .. -DCMAKE_INSTALL_PREFIX="$md_inst"
     make -j7
     md_ret_require=(
-        ""
-        ""
+        "$md_build/build/moonlight"
+        "$md_build/build/libgamestream/libgamestream.so"
+        "$md_build/build/libgamestream/libmoonlight-common.so"
     )
 }
 
 function install_moonlight-embedded() {
-    cd build
+    cd "$md_build/build"
     make install
 }
 
