@@ -11,7 +11,7 @@
 
 rp_module_id="fruitbox"
 rp_module_desc="Fruitbox - A customizable MP3 Retro Jukebox. Read the Package Help for more information."
-rp_module_help="Copy your .mp3 files to '$romdir/jukebox' then launch Fruitbox from EmulationStation.\n\nUsing a keyboard, press 'A' then '0' on your keyboard to play the song on the 'AO' slot. To exit, press the 'ESC' button.\n\nTo configure a gamepad, launch 'Jukebox Config' in Settings, then 'Configure Gamepad'.\n\nKnown Issues: laggy input; after gamepad configuration, fruitbox.btn may need to be modified to avoid crashing."
+rp_module_help="Copy your .mp3 files to '$romdir/jukebox' then launch Fruitbox from EmulationStation.\n\nTo configure a gamepad, launch 'Jukebox Config' in Settings, then 'Enable Gamepad Configuration'."
 rp_module_section="opt"
 
 function depends_fruitbox() {
@@ -58,14 +58,13 @@ function install_fruitbox() {
     cat > "$romdir/jukebox/+Start Fruitbox.sh" << _EOF_
 #!/bin/bash
 skin=WallJuke
-if [[ -e "$home/RetroArena/roms/jukebox/fruitbox.db" ]]; then
-    rm -rf "$home/RetroArena/roms/jukebox/fruitbox.db"
-fi
 if [[ -e "$home/.config/fruitbox" ]]; then
-    device=\$(cat /proc/bus/input/devices | grep -m1 -o '".*"' | sed 's/"//g' | sed -n 1p)
     rm -rf "$home/.config/fruitbox"
-    /opt/retroarena/emulators/fruitbox/fruitbox --input-device "\$device" --config-buttons
+    /opt/retroarena/emulators/fruitbox/fruitbox --config-buttons
 else
+    if [[ -e "$home/RetroArena/roms/jukebox/fruitbox.db" ]]; then
+        rm -rf "$home/RetroArena/roms/jukebox/fruitbox.db"
+    fi
     /opt/retroarena/emulators/fruitbox/fruitbox --cfg /opt/retroarena/emulators/fruitbox/skins/\$skin/fruitbox.cfg
 fi
 _EOF_
@@ -73,6 +72,10 @@ _EOF_
     chown $user:$user "$romdir/jukebox/+Start Fruitbox.sh"
     addEmulator 1 "$md_id" "jukebox" "fruitbox %ROM%"
     addSystem "jukebox"
+}
+
+function install_bin_fruitbox() {
+    downloadAndExtract "$__gitbins_url/fruitbox.tar.gz" "$md_inst" 1
 }
 
 function remove_fruitbox() {
@@ -124,58 +127,16 @@ function skin_fruitbox() {
 }
 
 function gamepad_fruitbox() {
-    dvice1=$(cat /proc/bus/input/devices | grep -m2 -o '".*"' | sed 's/"//g' | sed -n 1p)
-    dvice2=$(cat /proc/bus/input/devices | grep -m2 -o '".*"' | sed 's/"//g' | sed -n 2p)
-    dvice3=$(cat /proc/bus/input/devices | grep -m2 -o '".*"' | sed 's/"//g' | sed -n 3p)
-    dvice4=$(cat /proc/bus/input/devices | grep -m2 -o '".*"' | sed 's/"//g' | sed -n 4p)
-    while true; do
-        local options=(
-            1 "$dvice1"
-            2 "$dvice2"
-            3 "$dvice3"
-            4 "$dvice4"
-        )
-        local cmd=(dialog --backtitle "$__backtitle" --menu "Choose your gamepad device" 22 76 16)
-        local choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-        [[ -z "$choice" ]] && break
-        case "$choice" in
-            1)
-                sed -i "/device=/d" "$romdir/jukebox/+Start Fruitbox.sh"
-                sed -i "7i \ \ \ \ \device=\"$dvice1\"" "$romdir/jukebox/+Start Fruitbox.sh"
-                touch "$home/.config/fruitbox"
-                printMsgs "dialog" "You are all set!\n\nLaunch Fruitbox from EmulationStation to configure your gamepad.\n\nPress OK to Exit."
-                exit 0
-                ;;
-            2)
-                sed -i "/device=/d" "$romdir/jukebox/+Start Fruitbox.sh"
-                sed -i "7i \ \ \ \ \device=\"$dvice2\"" "$romdir/jukebox/+Start Fruitbox.sh"
-                touch "$home/.config/fruitbox"
-                printMsgs "dialog" "You are all set!\n\nLaunch Fruitbox from EmulationStation to configure your gamepad.\n\nPress OK to Exit."
-                exit 0
-                ;;
-            3)
-                sed -i "/device=/d" "$romdir/jukebox/+Start Fruitbox.sh"
-                sed -i "7i \ \ \ \ \device=\"$dvice3\"" "$romdir/jukebox/+Start Fruitbox.sh"
-                touch "$home/.config/fruitbox"
-                printMsgs "dialog" "You are all set!\n\nLaunch Fruitbox from EmulationStation to configure your gamepad.\n\nPress OK to Exit."
-                exit 0
-                ;;
-            4)
-                sed -i "/device=/d" "$romdir/jukebox/+Start Fruitbox.sh"
-                sed -i "7i \ \ \ \ \device=\"$dvice4\"" "$romdir/jukebox/+Start Fruitbox.sh"
-                touch "$home/.config/fruitbox"
-                printMsgs "dialog" "You are all set!\n\nLaunch Fruitbox from EmulationStation to configure your gamepad.\n\nPress OK to Exit."
-                exit 0
-                ;;
-        esac
-    done
+    touch "$home/.config/fruitbox"
+    printMsgs "dialog" "Enabled Gamepad Configuration\n\nLaunch Fruitbox from EmulationStation to configure your gamepad.\n\nPress OK to Exit."
+    exit 0
 }
 
 function gui_fruitbox() {  
     while true; do
         local options=(
             1 "Select Fruitbox Skin"
-            2 "Configure Gamepad"
+            2 "Enable Gamepad Configuration"
         )
         local cmd=(dialog --backtitle "$__backtitle" --menu "Choose an option" 22 76 16)
         local choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
