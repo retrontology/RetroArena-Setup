@@ -19,6 +19,14 @@ function get_ver_ffmpeg() {
     echo "3.4"
 }
 
+get_pkg_ver_ffmpeg() {
+    echo "$(get_ver_ffmpeg)-$(get_pkg_rel_ffmpeg)"
+}
+
+get_pkg_rel_ffmpeg() {
+    echo "1"
+}
+
 function depends_ffmpeg() {
     aptInstall checkinstall
     apt build-dep -y --force-yes ffmpeg
@@ -31,7 +39,6 @@ function sources_ffmpeg() {
 }
 
 function build_ffmpeg() {
-    cd "$md_build"
     make clean
     ./configure --prefix=/usr --extra-version=0ubuntu0.16.04.1 --build-suffix=-ffmpeg --toolchain=hardened --libdir=/usr/lib/arm-linux-gnueabihf --incdir=/usr/include/arm-linux-gnueabihf --cc=cc --cxx=g++ --enable-gpl --enable-shared --disable-stripping --disable-decoder=libopenjpeg --enable-avresample --enable-avisynth --enable-gnutls --enable-ladspa --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libmodplug --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libpulse --enable-librtmp --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvorbis --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx265 --enable-libxvid --enable-libzvbi --enable-openal --enable-opengl --enable-libdc1394 --enable-libiec61883 --enable-libzmq --enable-frei0r --enable-libx264 --enable-libopencv --enable-decoder=atrac3 --enable-decoder=aac --enable-decoder=aac_latm --enable-decoder=atrac3p --enable-decoder=mp3 --enable-decoder=pcm_s16le --enable-decoder=pcm_s8 --enable-demuxer=h264 --enable-demuxer=m4v --enable-demuxer=mpegvideo --enable-demuxer=mpegps --enable-demuxer=mp3 --enable-demuxer=avi --enable-demuxer=aac --enable-demuxer=pmp --enable-demuxer=oma --enable-demuxer=pcm_s16le --enable-demuxer=pcm_s8 --enable-muxer=avi --enable-demuxer=wav --enable-encoder=pcm_s16le --enable-encoder=huffyuv --enable-encoder=ffv1 --enable-encoder=mjpeg --enable-parser=h264 --enable-parser=mpeg4video --enable-parser=mpegaudio --enable-parser=mpegvideo --enable-parser=aac --enable-parser=aac_latm
     make -j7
@@ -54,15 +61,15 @@ function build_ffmpeg() {
 
 function remove_old_ffmpeg() {
     # remove our old ffmpeg packages
-    sudo apt remove --purge ffmpeg
+    sudo apt remove --purge -y ffmpeg
     sudo apt-get -y autoremove
 }
 
 function install_ffmpeg() {
     remove_old_ffmpeg
     cd "$md_build"
-    checkinstall -y --install=no --fstrans=yes --deldoc=yes --pkgversion=3.4
-    sudo dpkg -i --force-overwrite ffmpeg_3.4-1*.deb
+    checkinstall -y --install=no --fstrans=yes --deldoc=yes --pkgversion=$(get_ver_ffmpeg) --pkgrelease=$(get_pkg_rel_ffmpeg)
+    sudo dpkg -i --force-overwrite ffmpeg_$(get_pkg_ver_ffmpeg)*.deb
     echo "ffmpeg hold" | dpkg --set-selections
 }
 
