@@ -54,7 +54,7 @@ function build_ffmpeg() {
 
 function remove_old_ffmpeg() {
     # remove our old ffmpeg packages
-    sudo apt remove --purge ffmpeg
+    sudo apt remove --purge -y ffmpeg
     sudo apt-get -y autoremove
 }
 
