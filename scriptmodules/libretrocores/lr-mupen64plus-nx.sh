@@ -26,7 +26,7 @@ function sources_lr-mupen64plus-nx() {
     local branch"master"
     local commit=""
     isPlatform "arm"
-    gitPullOrClone "$md_build" https://github.com/libretro/parallel-n64.git "$branch" "$commit"
+    gitPullOrClone "$md_build" https://github.com/libretro/mupen64plus-libretro-nx.git "$branch" "$commit"
     isPlatform "rockpro64" && applyPatch "$md_data/rockpro64.patch"
 }
 
