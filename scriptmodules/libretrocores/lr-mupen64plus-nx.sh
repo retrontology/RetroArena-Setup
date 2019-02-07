@@ -15,17 +15,21 @@ rp_module_help="ROM Extensions: .z64 .n64 .v64\n\nCopy your N64 roms to $romdir/
 rp_module_licence="GPL3 https://raw.githubusercontent.com/libretro/mupen64plus-libretro-nx/mupen_next/LICENSE"
 rp_module_section="lr"
 
+
 function sources_lr-mupen64plus-nx() {
     gitPullOrClone "$md_build" https://github.com/libretro/mupen64plus-libretro-nx.git
 }
 
 function build_lr-mupen64plus-nx() {
+
+
     make clean
     local params=()
     if isPlatform "rockpro64" || isPlatform "odroid-c1" || isPlatform "odroid-xu"; then
         params+=(platform="$__platform")
     fi
     make "${params[@]}"
+
     md_ret_require="$md_build/mupen64plus_next_libretro.so"
 }
 
@@ -39,7 +43,6 @@ function install_lr-mupen64plus-nx() {
 function configure_lr-mupen64plus-nx() {
     mkRomDir "n64"
     ensureSystemretroconfig "n64"
-
     addEmulator 0 "$md_id" "n64" "$md_inst/mupen64plus_next_libretro.so"
     addSystem "n64"
 }
