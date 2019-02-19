@@ -17,7 +17,7 @@ rp_module_section="lr"
 
 
 function sources_lr-mupen64plus-nx() {
-    gitPullOrClone "$md_build" https://github.com/libretro/mupen64plus-libretro-nx.git
+    gitPullOrClone "$md_build" https://github.com/libretro/mupen64plus-libretro-nx.git mupen_next
 }
 
 function build_lr-mupen64plus-nx() {
