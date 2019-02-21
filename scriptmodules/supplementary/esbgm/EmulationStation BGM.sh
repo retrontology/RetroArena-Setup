@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INSTALL_LOC="/home/pigaming/RetroArena/scriptmodules/supplementary/esbgm/emulationstation_bgm.py"
-INI_LOC="/home/pigaming/RetroArena/scriptmodules/supplementary/esbgm/addons.ini"
+INSTALL_LOC="/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py"
+INI_LOC="/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/addons.ini"
 SECTION="EmulationStationBGM"
 BACKTITLE="Techitechi-chan's Toolbox"
 TITLE="EmulationStation BGM"
@@ -61,8 +61,7 @@ function main() {
                 9 "Startup Delay (${START_DELAY}ms)"
                 10 "Restart on Resume ($RESET)"
                 11 "Initial Song (${INIT_SONG})"
-                12 "Change Music Folder"
-                13 "Uninstall ES BGM")
+                12 "Change Music Folder")
         else
             options=( \
                 1 "Install ES BGM")
@@ -81,7 +80,6 @@ function main() {
             10) restart_on_resume ;;
             11) set_start_song ;;
             12) set_music_dir ;;
-            13) uninstall_bgm ;;
             *) exit ;;
         esac
     done

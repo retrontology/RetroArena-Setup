@@ -2,8 +2,8 @@
 from __future__ import division
 import os, sys, time, random, atexit, threading, ast, ConfigParser, logging
 log_level_disable = logging.DEBUG #logging.DEBUG
-config_path = '/home/pigaming/RetroArena/scriptmodules/supplementary/esbgm/addons.ini' # '~/github/emulationstation-bgm/addons.ini' #
-log_path = os.path.join(os.path.dirname(os.path.expanduser(config_path)), 'esbgm.log')
+config_path = '/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/addons.ini' # '~/github/emulationstation-bgm/addons.ini' #
+log_path = '/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/addons.ini' # os.path.join(os.path.dirname(os.path.expanduser(config_path)), 'esbgm.log')
 proc_names = ['htop'] #None
 # proc_names = ["wolf4sdl-3dr-v14", "wolf4sdl-gt-v14", "wolf4sdl-spear", "wolf4sdl-sw-v14", 
     # "xvic","xvic cart","xplus4","xpet","x128","x64sc","x64","PPSSPPSDL","prince",
