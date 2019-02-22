@@ -1316,15 +1316,11 @@ function ogst_emu() {
 }
 
 function bgm_stop() {
-    FADE_DURATION=600
-    BGM_INSTALL_LOC="/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py"
-    python2 $INSTALL_LOC stop --fade_duration $FADE_DURATION --force
+    python2 "/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py" stop --fade_duration 600 --force
 }
 
 function bgm_start() {
-    FADE_DURATION=600
-    BGM_INSTALL_LOC="/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py"
-    python2 $INSTALL_LOC play
+    python2 "/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py" play
 }
 
 function runcommand() {
