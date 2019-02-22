@@ -1315,6 +1315,18 @@ function ogst_emu() {
     fi
 }
 
+function bgm_stop() {
+    FADE_DURATION=600
+    BGM_INSTALL_LOC="/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py"
+    python2 $INSTALL_LOC stop --fade_duration $FADE_DURATION --force
+}
+
+function bgm_start() {
+    FADE_DURATION=600
+    BGM_INSTALL_LOC="/home/pigaming/RetroArena-Setup/scriptmodules/supplementary/esbgm/emulationstation_bgm.py"
+    python2 $INSTALL_LOC play
+}
+
 function runcommand() {
     get_config
 
@@ -1338,6 +1350,8 @@ function runcommand() {
     set_save_vars
 
     load_mode_defaults
+
+    bgm_stop
 
     show_launch
 
@@ -1381,6 +1395,8 @@ function runcommand() {
     [[ -n "$FB_NEW" ]] && restore_fb
 
     [[ "$EMULATOR" == lr-* ]] && retroarchIncludeToEnd "$CONF_ROOT/retroarch.cfg"
+
+    bgm_start
 
     user_script "runcommand-onend.sh"
 

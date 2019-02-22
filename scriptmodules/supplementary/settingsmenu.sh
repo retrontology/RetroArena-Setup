@@ -49,7 +49,8 @@ function configure_settingsmenu()
     # add the gameslist / icons
     local files=(
         "bezelproject"
-        "bgmtoggle"
+        "esbgmconfig"
+        "esbgmplayer"
         "bluetooth"
         "configedit"
         "controlreset"
@@ -73,7 +74,8 @@ function configure_settingsmenu()
 
     local names=(
         "Media: Bezel Project"
-        "Sound: BGM Toggle"
+        "Sound: BGM Configuration"
+        "Sound: BGM Player"
         "Network: Bluetooth"
         "System: Configuration Editor"
         "System: Controller Reset"
@@ -97,7 +99,8 @@ function configure_settingsmenu()
     
     local descs=(
         "Downloader for RetroArach system bezel packs to be used for various systems"
-        "Enable or disable the background music feature."
+        "Configuration for Emulation Station Background Music"
+        "Control for Emulation Station Background Music"
         "Register and connect to bluetooth devices. Unregister and remove devices, and display registered and connected devices."
         "Change common RetroArch options, and manually edit RetroArch configs, global configs, and non-RetroArch configs."
         "Reset controller configurations to factory default.
@@ -137,6 +140,7 @@ NOTE: Requires a keyboard to be connected."
     
     local hiddens=(
         "true"
+        "false"
         "false"
         "true"
         "true"
